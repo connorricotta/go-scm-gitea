@@ -17,7 +17,8 @@ type contentService struct {
 }
 
 func (s *contentService) Find(ctx context.Context, repo, path, ref string) (*scm.Content, *scm.Response, error) {
-	endpoint := fmt.Sprintf("api/v1/repos/%s/raw/%s/%s", repo, scm.TrimRef(ref), path)
+	// endpoint := fmt.Sprintf("api/v1/repos/%s/raw/%s/%s", repo, scm.TrimRef(ref), path)
+	endpoint := fmt.Sprintf("api/v1/repos/%s/raw/%s?ref=%s", repo, path, scm.TrimRef(ref))
 	out := new(bytes.Buffer)
 	res, err := s.client.do(ctx, "GET", endpoint, nil, out)
 	return &scm.Content{
